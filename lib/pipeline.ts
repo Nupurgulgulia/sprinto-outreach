@@ -1,6 +1,8 @@
 // The whole 7-step run for one domain. The agent loop is steps 2-5 of "How the loop uses the map".
 
-import { findContact } from "./contact";
+import { findContact, hunterCompanySize } from "./contact";
+
+const FETCH_BUDGET_MS = 30000;
 import { writeDraft } from "./draft";
 import { emptyFacts, extractAi, extractRules, mergeInto, pageKind } from "./extract";
 import { fetchPage, type CleanPage } from "./fetch";
@@ -10,6 +12,8 @@ import type { CompanyResult, FetchLogEntry, QuestionId } from "./types";
 
 export async function runCompany(domain: string, opts: { ai: boolean }): Promise<CompanyResult> {
   const aiOn = opts.ai && aiAvailable();
+  const started = Date.now();
+  let timedOut = false;
   const facts = emptyFacts();
   const log: FetchLogEntry[] = [];
   const fetched = new Set<string>();
@@ -86,6 +90,11 @@ export async function runCompany(domain: string, opts: { ai: boolean }): Promise
   while (extra < MAX_EXTRA_FETCHES) {
     const qs = evaluate(facts, tries);
     if (shortCircuited(qs)) break;
+    // Leave room for the contact lookup and the draft inside Vercel's 60-second limit.
+    if (Date.now() - started > FETCH_BUDGET_MS) {
+      timedOut = true;
+      break;
+    }
     const next = nextPage(qs, fetched, origin, homeLinks);
     if (!next) break;
     extra++;
@@ -111,31 +120,31 @@ export async function runCompany(domain: string, opts: { ai: boolean }): Promise
   const qs = evaluate(facts, tries);
   const d = decide(qs, extra, facts);
   const result: CompanyResult = { ...base(d.verdict, d.reason), questions: qs, rank: d.rank, needs: d.needs, flags: d.flags };
+  if (timedOut) result.flags.push(`stopped fetching after ${FETCH_BUDGET_MS / 1000}s (slow site); unread pages listed under needs`);
   if (aiOn && aiErrors.length && aiErrors.length >= log.filter((l) => l.outcome !== "failed").length) {
     result.flags.push(`AI extraction failed on every page (${aiErrors[0].slice(0, 120)}); rules-only facts used`);
   }
 
   // 7. contact + draft, only for qualified companies (saves Hunter's 25 monthly searches)
   if (d.verdict === "SEND" || d.verdict === "SEND_FLAGGED") {
-    const { contact, note, headcount } = await findContact(domain, facts.employee_count);
-    // The site never said how big they are, but Hunter's company data does. Over 500 is the
-    // Evidence Map's size short-circuit, so re-decide before writing anything.
-    if (facts.employee_count === null && headcount && headcount.min > 500) {
-      facts.employee_count = headcount.min;
-      facts.employee_evidence = { quote: `Hunter.io company data: headcount ${headcount.label}`, url: `https://hunter.io/search/${domain}` };
-      const qs2 = evaluate(facts, tries);
-      const d2 = decide(qs2, extra, facts);
-      return {
-        ...result,
-        questions: qs2,
-        verdict: d2.verdict,
-        reason: `${d2.reason} (size from Hunter.io; the site never stated it)`,
-        rank: d2.rank,
-        needs: d2.needs,
-        flags: d2.flags,
-        contact_note: `${note} No email drafted: company is too large.`,
-      };
+    // The site never said how big they are; Hunter's company data can. Over 500 is the Evidence
+    // Map's size short-circuit, so re-decide before spending a contact search or writing anything.
+    if (facts.employee_count === null) {
+      const size = await hunterCompanySize(domain);
+      if (size) {
+        facts.employee_count = size.min;
+        facts.employee_evidence = { quote: `Hunter.io company data: ${size.label} employees`, url: `https://hunter.io/companies/${domain}` };
+        const qs2 = evaluate(facts, tries);
+        const d2 = decide(qs2, extra, facts);
+        Object.assign(result, { questions: qs2, verdict: d2.verdict, reason: d2.reason, rank: d2.rank, needs: d2.needs, flags: d2.flags });
+        if (d2.verdict === "DROP") {
+          result.reason = `${d2.reason} (size from Hunter.io company data; the site never stated it)`;
+          result.contact_note = "No contact search and no email: company is too large.";
+          return result;
+        }
+      }
     }
+    const { contact, note } = await findContact(domain, facts.employee_count);
     result.contact = contact;
     result.contact_note = note;
     if (contact) {

@@ -40,7 +40,7 @@ export function isSmall(employees: number | null): boolean {
 }
 
 export type Headcount = { label: string; min: number };
-type ContactLookup = { contact: Contact | null; note: string; headcount?: Headcount | null };
+type ContactLookup = { contact: Contact | null; note: string };
 
 /** Hunter reports company size as a band ("1001-5000", "10K+"). The lower bound is what we can defend. */
 export function parseHeadcount(raw: unknown): Headcount | null {
@@ -49,6 +49,28 @@ export function parseHeadcount(raw: unknown): Headcount | null {
   if (!m) return null;
   const min = Math.round(Number(m[1]) * (m[2] ? 1000 : 1));
   return Number.isFinite(min) ? { label: raw.trim(), min } : null;
+}
+
+/**
+ * Hunter Company Enrichment: company size when the website never states it.
+ * Only called for companies that already qualified, so the free quota is not spent on drops.
+ */
+export async function hunterCompanySize(domain: string): Promise<Headcount | null> {
+  const key = process.env.HUNTER_API_KEY;
+  if (!key) return null;
+  try {
+    const res = await fetch(`https://api.hunter.io/v2/companies/find?domain=${encodeURIComponent(domain)}&api_key=${key}`, {
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    const metrics = (await res.json())?.data?.metrics ?? {};
+    if (typeof metrics.employeesCount === "number" && metrics.employeesCount > 0) {
+      return { label: `${metrics.employeesCount}${metrics.employees ? ` (${metrics.employees})` : ""}`, min: metrics.employeesCount };
+    }
+    return parseHeadcount(metrics.employees);
+  } catch {
+    return null;
+  }
 }
 
 export async function findContact(domain: string, employees: number | null): Promise<ContactLookup> {
@@ -81,7 +103,6 @@ export async function findContact(domain: string, employees: number | null): Pro
     if (!res.ok) return { contact: null, note: `Hunter returned HTTP ${res.status}.` };
     const data = (await res.json())?.data;
     const emails: HunterEmail[] = data?.emails ?? [];
-    const headcount = parseHeadcount(data?.headcount);
     const small = isSmall(employees);
     const ranked = emails
       .filter((e) => e.first_name && e.position)
@@ -94,7 +115,6 @@ export async function findContact(domain: string, employees: number | null): Pro
         note: emails.length
           ? `Hunter found ${emails.length} people but none with a founder, CTO or security title.`
           : "Hunter found no named people at this domain.",
-        headcount,
       };
     }
     const top = ranked[0];
@@ -110,7 +130,6 @@ export async function findContact(domain: string, employees: number | null): Pro
         why: `${top.e.position}: ${top.why}. Picked from ${ranked.length} relevant of ${emails.length} people Hunter found.`,
       },
       note: "Hunter.io Domain Search (1 search used).",
-      headcount,
     };
   } catch (e) {
     return { contact: null, note: `Hunter call failed: ${e instanceof Error ? e.message : String(e)}` };
