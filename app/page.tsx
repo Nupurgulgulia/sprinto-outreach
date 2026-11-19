@@ -17,7 +17,18 @@ const VERDICT_LABEL: Record<Verdict, string> = {
 const VERDICT_ORDER: Verdict[] = ["SEND", "SEND_FLAGGED", "HOLD", "REVIEW", "DROP"];
 
 type Check = { name: string; ok: boolean; detail: string };
-type EmailState = { subject: string; body: string; sending?: boolean; error?: string };
+type TestSummary = {
+  companies: number;
+  checks: number;
+  passed: number;
+  quotes_found: number;
+  quotes_missing: number;
+  avg_seconds: number;
+  max_seconds: number;
+  avg_extra_fetches: number;
+};
+type TestRun = { ran_at: string; summary: TestSummary; results: CompanyResult[] };
+type EmailState ={ subject: string; body: string; sending?: boolean; error?: string };
 
 function load<T>(key: string, fallback: T): T {
   try {
@@ -45,6 +56,9 @@ export default function Home() {
   const [open, setOpen] = useState<string | null>(null);
   const [checks, setChecks] = useState<Check[] | null>(null);
   const [checking, setChecking] = useState(false);
+  const [testRun, setTestRun] = useState<{ ran_at: string; summary: TestSummary } | null>(null);
+  const [myResults, setMyResults] = useState<CompanyResult[] | null>(null);
+  const [testError, setTestError] = useState<string | null>(null);
   const [emails, setEmails] = useState<Record<string, EmailState>>({});
 
   const [loaded, setLoaded] = useState(false);
@@ -56,8 +70,9 @@ export default function Home() {
   }, []);
   useEffect(() => {
     // Never write before the saved state has been read back, or an empty first render wipes it.
-    if (loaded) save(STORE, { input, results });
-  }, [loaded, input, results]);
+    // While the published test run is on screen, keep the viewer's own saved results untouched.
+    if (loaded && !testRun) save(STORE, { input, results });
+  }, [loaded, input, results, testRun]);
 
   const runChecks = useCallback(async () => {
     setChecking(true);
@@ -113,6 +128,12 @@ export default function Home() {
       ),
     ].slice(0, MAX_DOMAINS);
     if (!domains.length) return;
+    // A new run belongs with the viewer's own results, not the test run.
+    if (testRun) {
+      setResults(myResults ?? []);
+      setMyResults(null);
+      setTestRun(null);
+    }
     setRunning({ done: 0, total: domains.length, current: domains[0] });
     setOpen(null);
     for (let i = 0; i < domains.length; i++) {
@@ -157,6 +178,44 @@ export default function Home() {
     for (const r of results) c[r.verdict] = (c[r.verdict] ?? 0) + 1;
     return c;
   }, [results]);
+
+  // The published end-to-end test run (public/test-run.json). Viewing it never overwrites the
+  // viewer's own saved results: they are set aside and restored on "Back to my results".
+  const loadTestRun = useCallback(async () => {
+    setTestError(null);
+    try {
+      const res = await fetch("/test-run.json", { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = (await res.json()) as TestRun;
+      setMyResults((mine) => mine ?? results);
+      setResults(data.results);
+      setTestRun({ ran_at: data.ran_at, summary: data.summary });
+      setFilter("ALL");
+      setOpen(null);
+      setEmails({});
+    } catch (e) {
+      setTestError(`Could not load the test run: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  }, [results]);
+
+  const closeTestRun = () => {
+    setResults(myResults ?? []);
+    setMyResults(null);
+    setTestRun(null);
+    setOpen(null);
+    setEmails({});
+  };
+
+  // A shareable link: /?test-run opens straight into the test run.
+  useEffect(() => {
+    if (!loaded) return;
+    try {
+      if (new URLSearchParams(window.location.search).has("test-run")) loadTestRun();
+    } catch {
+      /* ignore */
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded]);
 
   const exportJson = () => {
     const blob = new Blob([JSON.stringify(results, null, 2)], { type: "application/json" });
@@ -211,6 +270,10 @@ export default function Home() {
                 Try the demo list
               </button>
             </div>
+            <button className="btn small test-btn" onClick={testRun ? closeTestRun : loadTestRun} disabled={!!running}>
+              {testRun ? "Back to my results" : "Load latest test run"}
+            </button>
+            {testError && <p className="err-text note">{testError}</p>}
             {running && (
               <div className="progress">
                 {running.done}/{running.total} done · reading <b>{running.current}</b>
@@ -240,6 +303,26 @@ export default function Home() {
         </aside>
 
         <main>
+          {testRun && (
+            <div className="test-banner">
+              <div>
+                <b>End-to-end test run</b> · {new Date(testRun.ran_at).toLocaleString()}
+                <p>
+                  {testRun.summary.companies} real companies · {testRun.summary.passed}/{testRun.summary.checks} checks passed ·{" "}
+                  {testRun.summary.quotes_found}/{testRun.summary.quotes_found + testRun.summary.quotes_missing} quotes re-found on the
+                  live pages · avg {testRun.summary.avg_seconds}s per company (max {testRun.summary.max_seconds}s) ·{" "}
+                  {testRun.summary.avg_extra_fetches} extra fetches on average
+                </p>
+                <p className="note">
+                  Read-only snapshot. Contact email addresses are hidden. Your own results are untouched and come back when you
+                  close this.
+                </p>
+              </div>
+              <button className="btn small" onClick={closeTestRun}>
+                Back to my results
+              </button>
+            </div>
+          )}
           {results.length > 0 && (
             <div className="summary">
               <button className={`chip ${filter === "ALL" ? "on" : ""}`} onClick={() => setFilter("ALL")}>
@@ -279,6 +362,13 @@ export default function Home() {
                   <span key={s}>{s}</span>
                 ))}
               </div>
+              <p style={{ marginTop: 18 }}>
+                <button className="btn" onClick={loadTestRun}>
+                  Load latest test run
+                </button>
+                <br />
+                <small>See all 20 companies from the last end-to-end test, with their quotes, loop logs and emails.</small>
+              </p>
             </div>
           )}
 

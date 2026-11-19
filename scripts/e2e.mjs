@@ -1,10 +1,11 @@
 // Live end-to-end test against a deployed copy of the app.
-//   node scripts/e2e.mjs [baseUrl] [--send]
+//   node scripts/e2e.mjs [baseUrl] [--send] [--publish]
 // Runs a test set of real companies through /api/run, checks every result against the Evidence Map
 // invariants, re-fetches the source page of every quote to confirm it is really there, tests input
 // validation and the locked recipient, and (with --send) sends ONE real email to SEND_TO.
 
 import { writeFileSync } from "node:fs";
+import { publishTestRun } from "./publish-test-run.mjs";
 
 const BASE = (process.argv.find((a) => a.startsWith("http")) ?? "https://sprinto-outreach-bice-one.vercel.app").replace(/\/$/, "");
 const DO_SEND = process.argv.includes("--send");
@@ -289,6 +290,10 @@ const report = {
   results: ok,
 };
 writeFileSync(OUT, JSON.stringify(report, null, 2));
+if (process.argv.includes("--publish")) {
+  publishTestRun(report);
+  console.log("Published to public/test-run.json (commit and push to show it in the app)");
+}
 
 console.log(`\nVerdicts: ${VERDICTS.map((v) => `${v} ${by(v).length}`).join(" · ")}`);
 console.log(`Time: ${totalSec}s total, avg ${report.avg_ms_per_company}ms, max ${report.max_ms}ms per company (limit 60000)`);

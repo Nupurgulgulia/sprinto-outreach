@@ -1,0 +1,2235 @@
+{
+  "ran_at": "2026-11-19T06:29:02.573Z",
+  "base": "https://sprinto-outreach-bice-one.vercel.app",
+  "summary": {
+    "companies": 20,
+    "checks": 358,
+    "passed": 358,
+    "failures": [],
+    "quotes_found": 42,
+    "quotes_missing": 0,
+    "avg_seconds": 10.8,
+    "max_seconds": 24.1,
+    "avg_extra_fetches": 0.95,
+    "verdicts": {
+      "SEND": 0,
+      "SEND_FLAGGED": 1,
+      "HOLD": 3,
+      "DROP": 12,
+      "REVIEW": 4
+    }
+  },
+  "results": [
+    {
+      "domain": "rocketlane.com",
+      "ran_at": "2026-11-19T06:27:44.601Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: SOC 2, ISO 27001.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Professional services businesses and delivery teams",
+          "evidence": [
+            {
+              "quote": "Rocketlane fuels ambition and helps PS businesses defy limits. To do something new.",
+              "url": "https://www.rocketlane.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: SOC 2, ISO 27001",
+          "evidence": [
+            {
+              "quote": "SOC 2 Compliant",
+              "url": "https://www.rocketlane.com/trust"
+            }
+          ],
+          "tries": 1,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "answered",
+          "answer": "3+ enterprise customer logos",
+          "evidence": [
+            {
+              "quote": "“We finally have full control and visibility across delivery. Projects run smoother, teams are aligned, and we’ve reached a 75% utilization rate. That’s real operational efficiency in action!”",
+              "url": "https://www.rocketlane.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Rocketlane is an agentic PSA platform for professional services that unifies delivery execution, business operations, resourcing, finances, and customer experience powered by AI agents.",
+        "is_b2b_saas": true,
+        "buyer_description": "Professional services businesses and delivery teams",
+        "b2b_evidence": {
+          "quote": "Rocketlane fuels ambition and helps PS businesses defy limits. To do something new.",
+          "url": "https://www.rocketlane.com/"
+        },
+        "certifications": [
+          "SOC 2",
+          "ISO 27001"
+        ],
+        "cert_evidence": {
+          "quote": "SOC 2 Compliant",
+          "url": "https://www.rocketlane.com/trust"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": [
+          {
+            "type": "enterprise_logos",
+            "label": "3+ enterprise customer logos",
+            "quote": "“We finally have full control and visibility across delivery. Projects run smoother, teams are aligned, and we’ve reached a 75% utilization rate. That’s real operational efficiency in action!”",
+            "url": "https://www.rocketlane.com/"
+          }
+        ]
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://www.rocketlane.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 1045
+        },
+        {
+          "step": 1,
+          "url": "https://www.rocketlane.com/trust",
+          "reason": "\"Already certified?\" is still empty → linked from homepage",
+          "outcome": "ok",
+          "detail": "security page",
+          "words": 170
+        }
+      ],
+      "extra_fetches": 1,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "zluri.com",
+      "ran_at": "2026-11-19T06:27:35.223Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: SOC 2, ISO 27001.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Enterprises and organizations needing identity governance and security across hybrid and AI-driven environments",
+          "evidence": [
+            {
+              "quote": "Gain complete visibility into identities and access, automate governance, and continuously manage identity risk across your enterprise.",
+              "url": "https://www.zluri.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: SOC 2, ISO 27001",
+          "evidence": [
+            {
+              "quote": "[image: AICPA SOC 2]",
+              "url": "https://www.zluri.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Zluri is an identity security platform that enables organizations to discover, govern, and secure human and non-human identities across SaaS apps, cloud platforms, and AI tools.",
+        "is_b2b_saas": true,
+        "buyer_description": "Enterprises and organizations needing identity governance and security across hybrid and AI-driven environments",
+        "b2b_evidence": {
+          "quote": "Gain complete visibility into identities and access, automate governance, and continuously manage identity risk across your enterprise.",
+          "url": "https://www.zluri.com/"
+        },
+        "certifications": [
+          "SOC 2",
+          "ISO 27001"
+        ],
+        "cert_evidence": {
+          "quote": "[image: AICPA SOC 2]",
+          "url": "https://www.zluri.com/"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://www.zluri.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 311
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "kapture.cx",
+      "ran_at": "2026-11-19T06:27:52.952Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: ISO 27001, SOC 2 Type II.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Enterprises across industries such as BFSI, retail, travel, tech, and utilities looking to scale customer operations",
+          "evidence": [
+            {
+              "quote": "Kapture CX - An AI-powered customer experience platform",
+              "url": "https://www.kapture.cx/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: ISO 27001, SOC 2 Type II",
+          "evidence": [
+            {
+              "quote": "Kapture complies with leading global and regional frameworks: ISO 27001, SOC 2 Type II, DPDPA, GDPR, HIPAA, ISO 42001 (AI Governance), OWASP secure coding practices, CERT-In guidelines",
+              "url": "https://www.kapture.cx/trust-center/"
+            }
+          ],
+          "tries": 1,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "answered",
+          "answer": "enterprise pricing tier",
+          "evidence": [
+            {
+              "quote": "The Agentic Operating System for the Enterprise",
+              "url": "https://www.kapture.cx/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "answered",
+          "answer": "Security page with no certification badge",
+          "evidence": [
+            {
+              "quote": "Kapture CX protects your data with end-to-end encryption, least-privilege access, continuous monitoring, and independently audited controls across global data centers.",
+              "url": "https://www.kapture.cx/trust-center/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Kapture CX is an AI-powered customer experience platform and agentic operating system that enables enterprises to build, test, and deploy AI agents alongside human workflows across voice, chat, email,",
+        "is_b2b_saas": true,
+        "buyer_description": "Enterprises across industries such as BFSI, retail, travel, tech, and utilities looking to scale customer operations",
+        "b2b_evidence": {
+          "quote": "Kapture CX - An AI-powered customer experience platform",
+          "url": "https://www.kapture.cx/"
+        },
+        "certifications": [
+          "ISO 27001",
+          "SOC 2 Type II"
+        ],
+        "cert_evidence": {
+          "quote": "Kapture complies with leading global and regional frameworks: ISO 27001, SOC 2 Type II, DPDPA, GDPR, HIPAA, ISO 42001 (AI Governance), OWASP secure coding practices, CERT-In guidelines",
+          "url": "https://www.kapture.cx/trust-center/"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": true,
+        "enterprise_evidence": {
+          "quote": "The Agentic Operating System for the Enterprise",
+          "url": "https://www.kapture.cx/"
+        },
+        "triggers": [
+          {
+            "type": "security_page_no_badge",
+            "label": "Security page with no certification badge",
+            "quote": "Kapture CX protects your data with end-to-end encryption, least-privilege access, continuous monitoring, and independently audited controls across global data centers.",
+            "url": "https://www.kapture.cx/trust-center/"
+          }
+        ]
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://www.kapture.cx/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 1079
+        },
+        {
+          "step": 1,
+          "url": "https://www.kapture.cx/trust-center/",
+          "reason": "\"Already certified?\" is still empty → linked from homepage",
+          "outcome": "ok",
+          "detail": "security page",
+          "words": 1130
+        }
+      ],
+      "extra_fetches": 1,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "freshworks.com",
+      "ran_at": "2026-11-19T06:27:31.376Z",
+      "verdict": "REVIEW",
+      "reason": "Homepage could not be read: Cloudflare challenge (HTTP 403). Queued for a human; the run moved on.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": null,
+        "is_b2b_saas": null,
+        "buyer_description": null,
+        "b2b_evidence": null,
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://freshworks.com/",
+          "reason": "homepage",
+          "outcome": "failed",
+          "detail": "Cloudflare challenge (HTTP 403)",
+          "words": 0
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "atlassian.com",
+      "ran_at": "2026-11-19T06:27:54.986Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Right stage and size?\" No: 16873 employees (over 500, has in-house GRC). (size from Hunter.io company data; the site never stated it)",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to software, IT and business teams",
+          "evidence": [
+            {
+              "quote": "Collaboration software for software, IT and business teams | Atlassian",
+              "url": "https://www.atlassian.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 1,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "short_circuit",
+          "answer": "No: 16873 employees (over 500, has in-house GRC)",
+          "evidence": [
+            {
+              "quote": "Hunter.io company data: 16873 (10K-50K) employees",
+              "url": "https://hunter.io/companies/atlassian.com"
+            },
+            {
+              "quote": "Enterprise services",
+              "url": "https://www.atlassian.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "answered",
+          "answer": "3+ enterprise customer logos",
+          "evidence": [
+            {
+              "quote": "That’s why we rely on Atlassian. ” Magnus Östberg",
+              "url": "https://www.atlassian.com/customers"
+            }
+          ],
+          "tries": 1,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Collaboration software and an AI orchestration platform connecting knowledge, people, decisions, and workflows across software, IT, and business teams.",
+        "is_b2b_saas": true,
+        "buyer_description": "software, IT and business teams",
+        "b2b_evidence": {
+          "quote": "Collaboration software for software, IT and business teams | Atlassian",
+          "url": "https://www.atlassian.com/"
+        },
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": 16873,
+        "employee_evidence": {
+          "quote": "Hunter.io company data: 16873 (10K-50K) employees",
+          "url": "https://hunter.io/companies/atlassian.com"
+        },
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": true,
+        "enterprise_evidence": {
+          "quote": "Enterprise services",
+          "url": "https://www.atlassian.com/"
+        },
+        "triggers": [
+          {
+            "type": "enterprise_logos",
+            "label": "3+ enterprise customer logos",
+            "quote": "That’s why we rely on Atlassian. ” Magnus Östberg",
+            "url": "https://www.atlassian.com/customers"
+          }
+        ]
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://www.atlassian.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 418
+        },
+        {
+          "step": 1,
+          "url": "https://www.atlassian.com/trust",
+          "reason": "\"Already certified?\" is still empty → linked from homepage",
+          "outcome": "ok",
+          "detail": "security page",
+          "words": 279
+        },
+        {
+          "step": 2,
+          "url": "https://www.atlassian.com/customers",
+          "reason": "\"Under compliance pressure?\" is still empty → linked from homepage",
+          "outcome": "ok",
+          "detail": "customers page",
+          "words": 501
+        }
+      ],
+      "extra_fetches": 2,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": "No contact search and no email: company is too large.",
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "zerodha.com",
+      "ran_at": "2026-11-19T06:27:44.248Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"B2B SaaS?\" No: not software sold to businesses.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "short_circuit",
+          "answer": "No: not software sold to businesses",
+          "evidence": [
+            {
+              "quote": "Online platform to invest in stocks, IPOs, derivatives, mutual funds, ETFs, bonds, and more.",
+              "url": "https://zerodha.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Online brokerage platform for investing in stocks, IPOs, derivatives, mutual funds, ETFs, and bonds.",
+        "is_b2b_saas": false,
+        "buyer_description": "Retail investors and traders",
+        "b2b_evidence": {
+          "quote": "Online platform to invest in stocks, IPOs, derivatives, mutual funds, ETFs, bonds, and more.",
+          "url": "https://zerodha.com/"
+        },
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://zerodha.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 679
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "swiggy.com",
+      "ran_at": "2026-11-19T06:27:46.249Z",
+      "verdict": "REVIEW",
+      "reason": "Homepage has only 8 readable words (a JavaScript app the reader could not render). Queued for a human; the run moved on.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": null,
+        "is_b2b_saas": null,
+        "buyer_description": null,
+        "b2b_evidence": null,
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://swiggy.com/",
+          "reason": "homepage",
+          "outcome": "failed",
+          "detail": "only 8 readable words, even after the rendering reader",
+          "words": 8
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "nykaa.com",
+      "ran_at": "2026-11-19T06:27:51.170Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"B2B SaaS?\" No: not software sold to businesses.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "short_circuit",
+          "answer": "No: not software sold to businesses",
+          "evidence": [
+            {
+              "quote": "Get Extra 20% off On Your First App Order",
+              "url": "https://nykaa.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Beauty and personal care products including hand creams, shower soaps, body lotions, body washes, and body oils.",
+        "is_b2b_saas": false,
+        "buyer_description": "consumers",
+        "b2b_evidence": {
+          "quote": "Get Extra 20% off On Your First App Order",
+          "url": "https://nykaa.com/"
+        },
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://nykaa.com/",
+          "reason": "homepage",
+          "outcome": "thin_retry_ok",
+          "detail": "JavaScript shell; re-read through the rendering reader",
+          "words": 379
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "not-a-real-site-xyz-123.com",
+      "ran_at": "2026-11-19T06:27:46.800Z",
+      "verdict": "REVIEW",
+      "reason": "Homepage could not be read: site domain does not resolve. Queued for a human; the run moved on.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": null,
+        "is_b2b_saas": null,
+        "buyer_description": null,
+        "b2b_evidence": null,
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://not-a-real-site-xyz-123.com/",
+          "reason": "homepage",
+          "outcome": "failed",
+          "detail": "site domain does not resolve",
+          "words": 0
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "springworks.in",
+      "ran_at": "2026-11-19T06:28:09.969Z",
+      "verdict": "HOLD",
+      "reason": "Fits the ICP on what we could see, but no compliance-pressure trigger was found after 3/4 extra fetches. Absence of evidence on a thin site is not evidence of no need, so this goes to a human instead of being dropped.",
+      "rank": 20,
+      "needs": [
+        "Already certified?",
+        "Under compliance pressure?"
+      ],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to HR teams and professionals",
+          "evidence": [
+            {
+              "quote": "HR Software for Hiring, Background Verification & Employee Engagement | SpringVerify",
+              "url": "https://www.springworks.in/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 1,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "answered",
+          "answer": "11 open roles",
+          "evidence": [
+            {
+              "quote": "Open positions 11",
+              "url": "https://jobs.goodfit.so/jobs/springworks"
+            }
+          ],
+          "tries": 1,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 1,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "An HR platform offering background verification, AI hiring tools, employee engagement, and employee group health insurance.",
+        "is_b2b_saas": true,
+        "buyer_description": "HR teams and professionals",
+        "b2b_evidence": {
+          "quote": "HR Software for Hiring, Background Verification & Employee Engagement | SpringVerify",
+          "url": "https://www.springworks.in/"
+        },
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": 11,
+        "roles_evidence": {
+          "quote": "Open positions 11",
+          "url": "https://jobs.goodfit.so/jobs/springworks"
+        },
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://www.springworks.in/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 581
+        },
+        {
+          "step": 1,
+          "url": "https://www.springworks.in/security",
+          "reason": "\"Already certified?\" is still empty → standard path",
+          "outcome": "ok",
+          "detail": "security page",
+          "words": 22
+        },
+        {
+          "step": 2,
+          "url": "https://jobs.goodfit.so/jobs/springworks",
+          "reason": "\"Right stage and size?\" is still empty → standard path",
+          "outcome": "ok",
+          "detail": "careers page",
+          "words": 36
+        },
+        {
+          "step": 3,
+          "url": "https://www.springworks.in/customers",
+          "reason": "\"Under compliance pressure?\" is still empty → standard path",
+          "outcome": "ok",
+          "detail": "customers page",
+          "words": 22
+        }
+      ],
+      "extra_fetches": 3,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "spyne.ai",
+      "ran_at": "2026-11-19T06:28:06.795Z",
+      "verdict": "HOLD",
+      "reason": "Fits the ICP on what we could see, but no compliance-pressure trigger was found after 4/4 extra fetches. Absence of evidence on a thin site is not evidence of no need, so this goes to a human instead of being dropped.",
+      "rank": 20,
+      "needs": [
+        "Already certified?",
+        "Under compliance pressure?"
+      ],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to car dealers and dealerships",
+          "evidence": [
+            {
+              "quote": "Empowering car dealers with an AI platform to source, list, market, and sell vehicles faster through advanced visual merchandising and conversational AI agents.",
+              "url": "https://www.spyne.ai/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "answered",
+          "answer": "enterprise pricing tier",
+          "evidence": [
+            {
+              "quote": "Personalized AI, enterprise-grade security",
+              "url": "https://www.spyne.ai/pricing"
+            }
+          ],
+          "tries": 1,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Empowering car dealers with an AI platform to source, list, market, and sell vehicles faster through advanced visual merchandising and conversational AI agents.",
+        "is_b2b_saas": true,
+        "buyer_description": "car dealers and dealerships",
+        "b2b_evidence": {
+          "quote": "Empowering car dealers with an AI platform to source, list, market, and sell vehicles faster through advanced visual merchandising and conversational AI agents.",
+          "url": "https://www.spyne.ai/"
+        },
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": true,
+        "enterprise_evidence": {
+          "quote": "Personalized AI, enterprise-grade security",
+          "url": "https://www.spyne.ai/pricing"
+        },
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://www.spyne.ai/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 139
+        },
+        {
+          "step": 1,
+          "url": "https://www.spyne.ai/security",
+          "reason": "\"Already certified?\" is still empty → standard path",
+          "outcome": "failed",
+          "detail": "HTTP 404",
+          "words": 0
+        },
+        {
+          "step": 2,
+          "url": "https://www.spyne.ai/trust",
+          "reason": "\"Already certified?\" is still empty → standard path",
+          "outcome": "failed",
+          "detail": "HTTP 404",
+          "words": 0
+        },
+        {
+          "step": 3,
+          "url": "https://www.spyne.ai/pricing",
+          "reason": "\"Right stage and size?\" is still empty → linked from homepage",
+          "outcome": "ok",
+          "detail": "pricing page",
+          "words": 595
+        },
+        {
+          "step": 4,
+          "url": "https://www.spyne.ai/customers",
+          "reason": "\"Under compliance pressure?\" is still empty → standard path",
+          "outcome": "failed",
+          "detail": "HTTP 404",
+          "words": 0
+        }
+      ],
+      "extra_fetches": 4,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "plane.so",
+      "ran_at": "2026-11-19T06:27:57.668Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: SOC 2, ISO 27001.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Teams and organizations needing project management, issue tracking, and knowledge base software",
+          "evidence": [
+            {
+              "quote": "Plane brings projects, docs, and AI-powered workflows into one unified workspace so teams and agents can plan, execute, and stay aligned.",
+              "url": "https://plane.so/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: SOC 2, ISO 27001",
+          "evidence": [
+            {
+              "quote": "SOC 2, ISO 27001, GDPR, and CCPA compliance out of the box.",
+              "url": "https://plane.so/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "answered",
+          "answer": "enterprise pricing tier",
+          "evidence": [
+            {
+              "quote": "Go to /enterprise →",
+              "url": "https://plane.so/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "answered",
+          "answer": "3+ enterprise customer logos",
+          "evidence": [
+            {
+              "quote": "Why FortyAU replaced Monday and Trello with Plane for flexible, self-hosted project delivery",
+              "url": "https://plane.so/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Plane is a unified project management, documentation, and AI-powered workflow platform enabling teams and AI agents to plan, track, and execute work.",
+        "is_b2b_saas": true,
+        "buyer_description": "Teams and organizations needing project management, issue tracking, and knowledge base software",
+        "b2b_evidence": {
+          "quote": "Plane brings projects, docs, and AI-powered workflows into one unified workspace so teams and agents can plan, execute, and stay aligned.",
+          "url": "https://plane.so/"
+        },
+        "certifications": [
+          "SOC 2",
+          "ISO 27001"
+        ],
+        "cert_evidence": {
+          "quote": "SOC 2, ISO 27001, GDPR, and CCPA compliance out of the box.",
+          "url": "https://plane.so/"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": true,
+        "enterprise_evidence": {
+          "quote": "Go to /enterprise →",
+          "url": "https://plane.so/"
+        },
+        "triggers": [
+          {
+            "type": "enterprise_logos",
+            "label": "3+ enterprise customer logos",
+            "quote": "Why FortyAU replaced Monday and Trello with Plane for flexible, self-hosted project delivery",
+            "url": "https://plane.so/"
+          }
+        ]
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://plane.so/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 741
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "formbricks.com",
+      "ran_at": "2026-11-19T06:28:00.828Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: ISO 27001, SOC 2 Type II.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to CX organizations, IT leads, public sector, research, and product teams",
+          "evidence": [
+            {
+              "quote": "Open source experience management that runs in your infrastructure, next to your revenue data.",
+              "url": "https://formbricks.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: ISO 27001, SOC 2 Type II",
+          "evidence": [
+            {
+              "quote": "ISO 27001 certificate on request",
+              "url": "https://formbricks.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not enough yet (2 open roles)",
+          "evidence": [
+            {
+              "quote": "We're hiring : two open roles, remote in Europe",
+              "url": "https://formbricks.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "answered",
+          "answer": "3+ enterprise customer logos",
+          "evidence": [
+            {
+              "quote": "See how public sector, research and product teams run feedback on Formbricks.",
+              "url": "https://formbricks.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Open source experience management and survey platform that runs in your infrastructure, connecting customer feedback directly to revenue and business data.",
+        "is_b2b_saas": true,
+        "buyer_description": "CX organizations, IT leads, public sector, research, and product teams",
+        "b2b_evidence": {
+          "quote": "Open source experience management that runs in your infrastructure, next to your revenue data.",
+          "url": "https://formbricks.com/"
+        },
+        "certifications": [
+          "ISO 27001",
+          "SOC 2 Type II"
+        ],
+        "cert_evidence": {
+          "quote": "ISO 27001 certificate on request",
+          "url": "https://formbricks.com/"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": 2,
+        "roles_evidence": {
+          "quote": "We're hiring : two open roles, remote in Europe",
+          "url": "https://formbricks.com/"
+        },
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": [
+          {
+            "type": "enterprise_logos",
+            "label": "3+ enterprise customer logos",
+            "quote": "See how public sector, research and product teams run feedback on Formbricks.",
+            "url": "https://formbricks.com/"
+          }
+        ]
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://formbricks.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 1342
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "papermark.com",
+      "ran_at": "2026-11-19T06:28:16.395Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: ISO 27001, SOC 2 Type II.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to dealmakers, founders and finance teams",
+          "evidence": [
+            {
+              "quote": "The world's most ambitious dealmakers, founders and finance teams trust Papermark to host their data rooms and share confidential documents.",
+              "url": "https://www.papermark.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: ISO 27001, SOC 2 Type II",
+          "evidence": [
+            {
+              "quote": "ISO 27001 certified · SOC 2 Type II",
+              "url": "https://www.papermark.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Papermark is a secure data room built for dealmakers to host data rooms and share confidential documents with control, visibility, and trust.",
+        "is_b2b_saas": true,
+        "buyer_description": "dealmakers, founders and finance teams",
+        "b2b_evidence": {
+          "quote": "The world's most ambitious dealmakers, founders and finance teams trust Papermark to host their data rooms and share confidential documents.",
+          "url": "https://www.papermark.com/"
+        },
+        "certifications": [
+          "ISO 27001",
+          "SOC 2 Type II"
+        ],
+        "cert_evidence": {
+          "quote": "ISO 27001 certified · SOC 2 Type II",
+          "url": "https://www.papermark.com/"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://www.papermark.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 458
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "documenso.com",
+      "ran_at": "2026-11-19T06:28:12.726Z",
+      "verdict": "HOLD",
+      "reason": "Fits the ICP on what we could see, but no compliance-pressure trigger was found after 4/4 extra fetches. Absence of evidence on a thin site is not evidence of no need, so this goes to a human instead of being dropped.",
+      "rank": 20,
+      "needs": [
+        "Already certified?",
+        "Under compliance pressure?"
+      ],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Teams and fast-growing enterprise companies needing digital signature workflows and API integration",
+          "evidence": [
+            {
+              "quote": "Bring everyone on board and scale seamlessly across teams. Collaborate on signing workflows while keeping private documents secure. Empower your team with Documenso.",
+              "url": "https://documenso.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "answered",
+          "answer": "enterprise pricing tier",
+          "evidence": [
+            {
+              "quote": "Deliver a frictionless signing experience to your users at any scale with enterprise-grade functionality that is ready when you are.",
+              "url": "https://documenso.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 1,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Documenso provides digital document signing software and signing APIs for teams and enterprises, available as an open-source or hosted solution.",
+        "is_b2b_saas": true,
+        "buyer_description": "Teams and fast-growing enterprise companies needing digital signature workflows and API integration",
+        "b2b_evidence": {
+          "quote": "Bring everyone on board and scale seamlessly across teams. Collaborate on signing workflows while keeping private documents secure. Empower your team with Documenso.",
+          "url": "https://documenso.com/"
+        },
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": true,
+        "enterprise_evidence": {
+          "quote": "Deliver a frictionless signing experience to your users at any scale with enterprise-grade functionality that is ready when you are.",
+          "url": "https://documenso.com/"
+        },
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://documenso.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 547
+        },
+        {
+          "step": 1,
+          "url": "https://documenso.com/security",
+          "reason": "\"Already certified?\" is still empty → standard path",
+          "outcome": "failed",
+          "detail": "HTTP 404",
+          "words": 0
+        },
+        {
+          "step": 2,
+          "url": "https://documenso.com/trust",
+          "reason": "\"Already certified?\" is still empty → standard path",
+          "outcome": "failed",
+          "detail": "HTTP 404",
+          "words": 0
+        },
+        {
+          "step": 3,
+          "url": "https://documenso.com/careers",
+          "reason": "\"Under compliance pressure?\" is still empty → linked from homepage",
+          "outcome": "ok",
+          "detail": "careers page",
+          "words": 102
+        },
+        {
+          "step": 4,
+          "url": "https://documenso.com/customers",
+          "reason": "\"Under compliance pressure?\" is still empty → standard path",
+          "outcome": "failed",
+          "detail": "HTTP 404",
+          "words": 0
+        }
+      ],
+      "extra_fetches": 4,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "twenty.com",
+      "ran_at": "2026-11-19T06:28:18.970Z",
+      "verdict": "SEND_FLAGGED",
+      "reason": "Qualified and flagged: B2B SaaS with 1 compliance trigger, but certification status not stated (assumed not certified). A wrong drop is the expensive error, so it qualifies at a lower rank with the unknown named.",
+      "rank": 55,
+      "needs": [
+        "Already certified?"
+      ],
+      "flags": [
+        "certification status not stated (assumed not certified)"
+      ],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Technical teams and GTM organizations",
+          "evidence": [
+            {
+              "quote": "Twenty gives technical teams the building blocks for a custom CRM that meets complex business needs and quickly adapts as the business evolves.",
+              "url": "https://twenty.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "answered",
+          "answer": "32 employees · enterprise pricing tier",
+          "evidence": [
+            {
+              "quote": "Hunter.io company data: 32 (11-50) employees",
+              "url": "https://hunter.io/companies/twenty.com"
+            },
+            {
+              "quote": "[image: Enterprise plan icon]",
+              "url": "https://twenty.com/pricing"
+            }
+          ],
+          "tries": 1,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "answered",
+          "answer": "3+ enterprise customer logos",
+          "evidence": [
+            {
+              "quote": "[image: République Française] [image: Bayer] [image: Corgi] [image: Murphy] [image: Frankfurter Allgemeine Zeitung] [image: Wazoku] [image: Żabka] [image: OTIIMA] [image: NIC Industries] [image: Shiawase Home]",
+              "url": "https://twenty.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Twenty gives technical teams the building blocks to build and adapt an enterprise, open-source CRM and internal apps with an extensibility toolkit.",
+        "is_b2b_saas": true,
+        "buyer_description": "Technical teams and GTM organizations",
+        "b2b_evidence": {
+          "quote": "Twenty gives technical teams the building blocks for a custom CRM that meets complex business needs and quickly adapts as the business evolves.",
+          "url": "https://twenty.com/"
+        },
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": 32,
+        "employee_evidence": {
+          "quote": "Hunter.io company data: 32 (11-50) employees",
+          "url": "https://hunter.io/companies/twenty.com"
+        },
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": true,
+        "enterprise_evidence": {
+          "quote": "[image: Enterprise plan icon]",
+          "url": "https://twenty.com/pricing"
+        },
+        "triggers": [
+          {
+            "type": "enterprise_logos",
+            "label": "3+ enterprise customer logos",
+            "quote": "[image: République Française] [image: Bayer] [image: Corgi] [image: Murphy] [image: Frankfurter Allgemeine Zeitung] [image: Wazoku] [image: Żabka] [image: OTIIMA] [image: NIC Industries] [image: Shiawase Home]",
+            "url": "https://twenty.com/"
+          }
+        ]
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://twenty.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 942
+        },
+        {
+          "step": 1,
+          "url": "https://twenty.com/security",
+          "reason": "\"Already certified?\" is still empty → standard path",
+          "outcome": "failed",
+          "detail": "HTTP 404",
+          "words": 0
+        },
+        {
+          "step": 2,
+          "url": "https://twenty.com/trust",
+          "reason": "\"Already certified?\" is still empty → standard path",
+          "outcome": "failed",
+          "detail": "HTTP 404",
+          "words": 0
+        },
+        {
+          "step": 3,
+          "url": "https://twenty.com/pricing",
+          "reason": "\"Right stage and size?\" is still empty → linked from homepage",
+          "outcome": "ok",
+          "detail": "pricing page",
+          "words": 579
+        }
+      ],
+      "extra_fetches": 3,
+      "rejected_quotes": 0,
+      "contact": {
+        "name": "Félix Malfait",
+        "first_name": "Félix",
+        "title": "Co-Founder",
+        "email": "(hidden in the published test run)",
+        "source": "hunter",
+        "confidence": 79,
+        "why": "Co-Founder: at this size the founder signs off on the audit budget and feels the enterprise deals it blocks. Picked from 2 relevant of 10 people Hunter found."
+      },
+      "contact_note": "Hunter.io Domain Search (1 search used).",
+      "draft": {
+        "subject": "enterprise compliance for twenty",
+        "body": "Hi Félix,\n\nWith Twenty serving major enterprise organizations like Bayer and République Française, security reviews and compliance requirements have likely become routine hurdles. At your stage, getting audit-ready for SOC 2 or ISO 27001 usually means pulling key engineers off product development to gather screenshots and evidence. Sprinto connects directly to your cloud, code, and identity tools to automate control monitoring and evidence collection with minimal engineering lift.\n\nWould you be open to a 20-minute call next week to see how it works?\n\nThe Sprinto team",
+        "hook": "Twenty counts large organizations like Bayer and République Française among its customers.",
+        "why": "As a co-founder closing large enterprise logos, Félix directly experiences the security review friction and audit demands required to finalize those contracts.",
+        "pain_points": [
+          {
+            "title": "Security reviews delaying enterprise deals",
+            "why": "Landing large enterprise clients like Bayer brings procurement scrutiny and mandatory compliance certifications that can stall sales cycles."
+          },
+          {
+            "title": "Engineering hours lost to audit evidence collection",
+            "why": "With an engineering-heavy team of 32, building audit evidence manually pulls developers away from the core CRM roadmap."
+          }
+        ],
+        "written_by": "ai"
+      },
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "hoppscotch.io",
+      "ran_at": "2026-11-19T06:28:10.961Z",
+      "verdict": "REVIEW",
+      "reason": "Homepage could not be read: page is empty even after the rendering reader. Queued for a human; the run moved on.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "unknown",
+          "answer": "Not stated (treated as not certified, flagged)",
+          "evidence": [],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": null,
+        "is_b2b_saas": null,
+        "buyer_description": null,
+        "b2b_evidence": null,
+        "certifications": null,
+        "cert_evidence": null,
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://hoppscotch.io/",
+          "reason": "homepage",
+          "outcome": "failed",
+          "detail": "page is empty even after the rendering reader",
+          "words": 0
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "unkey.com",
+      "ran_at": "2026-11-19T06:28:16.613Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: SOC 2 Type II.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Developers and engineering teams building, scaling, and managing APIs",
+          "evidence": [
+            {
+              "quote": "Unkey | The Developer Platform for Modern APIs",
+              "url": "https://www.unkey.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: SOC 2 Type II",
+          "evidence": [
+            {
+              "quote": "SOC 2 Type II Certified",
+              "url": "https://www.unkey.com/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "unknown",
+          "answer": "Not stated",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Unkey is a developer platform that unifies API infrastructure, offering instant API deployment, edge gateways, rate limiting, authentication, and analytics.",
+        "is_b2b_saas": true,
+        "buyer_description": "Developers and engineering teams building, scaling, and managing APIs",
+        "b2b_evidence": {
+          "quote": "Unkey | The Developer Platform for Modern APIs",
+          "url": "https://www.unkey.com/"
+        },
+        "certifications": [
+          "SOC 2 Type II"
+        ],
+        "cert_evidence": {
+          "quote": "SOC 2 Type II Certified",
+          "url": "https://www.unkey.com/"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": null,
+        "enterprise_evidence": null,
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://www.unkey.com/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 636
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "dub.co",
+      "ran_at": "2026-11-19T06:28:16.365Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: SOC 2 Type II.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Marketing teams, startups, and enterprises managing short links and referral/affiliate programs",
+          "evidence": [
+            {
+              "quote": "Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs.",
+              "url": "https://dub.co/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: SOC 2 Type II",
+          "evidence": [
+            {
+              "quote": "[image: AICPA SOC 2 Type II Certified]",
+              "url": "https://dub.co/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "answered",
+          "answer": "enterprise pricing tier",
+          "evidence": [
+            {
+              "quote": "Enterprise-grade link infrastructure",
+              "url": "https://dub.co/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "answered",
+          "answer": "3+ enterprise customer logos",
+          "evidence": [
+            {
+              "quote": "Trusted by startups and enterprises",
+              "url": "https://dub.co/"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Dub is a link attribution platform offering short link management, conversion tracking, and affiliate/referral program tools.",
+        "is_b2b_saas": true,
+        "buyer_description": "Marketing teams, startups, and enterprises managing short links and referral/affiliate programs",
+        "b2b_evidence": {
+          "quote": "Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs.",
+          "url": "https://dub.co/"
+        },
+        "certifications": [
+          "SOC 2 Type II"
+        ],
+        "cert_evidence": {
+          "quote": "[image: AICPA SOC 2 Type II Certified]",
+          "url": "https://dub.co/"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": true,
+        "enterprise_evidence": {
+          "quote": "Enterprise-grade link infrastructure",
+          "url": "https://dub.co/"
+        },
+        "triggers": [
+          {
+            "type": "enterprise_logos",
+            "label": "3+ enterprise customer logos",
+            "quote": "Trusted by startups and enterprises",
+            "url": "https://dub.co/"
+          }
+        ]
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://dub.co/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 538
+        }
+      ],
+      "extra_fetches": 0,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    },
+    {
+      "domain": "trigger.dev",
+      "ran_at": "2026-11-19T06:28:35.695Z",
+      "verdict": "DROP",
+      "reason": "Short-circuit on \"Already certified?\" Yes: SOC 2 Type II.",
+      "rank": 0,
+      "needs": [],
+      "flags": [],
+      "questions": [
+        {
+          "id": "b2b",
+          "question": "B2B SaaS?",
+          "status": "answered",
+          "answer": "Yes: sells to Developers and engineering teams building AI agents and background workflows",
+          "evidence": [
+            {
+              "quote": "Choose exactly what each API key can do, save presets for your team, and see what each key uses.",
+              "url": "https://trigger.dev/"
+            }
+          ],
+          "tries": 0,
+          "limit": 1
+        },
+        {
+          "id": "certified",
+          "question": "Already certified?",
+          "status": "short_circuit",
+          "answer": "Yes: SOC 2 Type II",
+          "evidence": [
+            {
+              "quote": "Yes, Trigger.dev is SOC 2 Type II compliant.",
+              "url": "https://trigger.dev/security"
+            }
+          ],
+          "tries": 1,
+          "limit": 1
+        },
+        {
+          "id": "stage",
+          "question": "Right stage and size?",
+          "status": "answered",
+          "answer": "enterprise pricing tier",
+          "evidence": [
+            {
+              "quote": "Our latest report is available upon request for our Enterprise customers.",
+              "url": "https://trigger.dev/security"
+            }
+          ],
+          "tries": 0,
+          "limit": 2
+        },
+        {
+          "id": "pressure",
+          "question": "Under compliance pressure?",
+          "status": "unknown",
+          "answer": "No trigger found yet",
+          "evidence": [],
+          "tries": 0,
+          "limit": 2
+        }
+      ],
+      "facts": {
+        "product_summary": "Trigger.dev is an open-source platform for building and deploying durable AI agents and workflows in TypeScript, offering long-running tasks with retries, queues, AI observability, and elastic scaling",
+        "is_b2b_saas": true,
+        "buyer_description": "Developers and engineering teams building AI agents and background workflows",
+        "b2b_evidence": {
+          "quote": "Choose exactly what each API key can do, save presets for your team, and see what each key uses.",
+          "url": "https://trigger.dev/"
+        },
+        "certifications": [
+          "SOC 2 Type II"
+        ],
+        "cert_evidence": {
+          "quote": "Yes, Trigger.dev is SOC 2 Type II compliant.",
+          "url": "https://trigger.dev/security"
+        },
+        "funding_stage": null,
+        "funding_evidence": null,
+        "employee_count": null,
+        "employee_evidence": null,
+        "open_roles": null,
+        "roles_evidence": null,
+        "enterprise_tier": true,
+        "enterprise_evidence": {
+          "quote": "Our latest report is available upon request for our Enterprise customers.",
+          "url": "https://trigger.dev/security"
+        },
+        "triggers": []
+      },
+      "fetch_log": [
+        {
+          "step": 0,
+          "url": "https://trigger.dev/",
+          "reason": "homepage",
+          "outcome": "ok",
+          "detail": "plain request",
+          "words": 1296
+        },
+        {
+          "step": 1,
+          "url": "https://trigger.dev/security",
+          "reason": "\"Already certified?\" is still empty → linked from homepage",
+          "outcome": "ok",
+          "detail": "security page",
+          "words": 257
+        }
+      ],
+      "extra_fetches": 1,
+      "rejected_quotes": 0,
+      "contact": null,
+      "contact_note": null,
+      "draft": null,
+      "ai_mode": "ai",
+      "sent": null
+    }
+  ]
+}

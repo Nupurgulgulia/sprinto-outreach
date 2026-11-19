@@ -99,10 +99,10 @@ npx tsx scripts/rules-check.ts
 have them, ~360 invariant checks (verdict matches the four answers, at most 4 extra fetches, every
 quote from the company's own site, contact and draft only for qualified companies, email greets by
 first name), then it re-fetches every quote's source page to confirm the quote is really there,
-and tests input validation and the locked recipient. Add `--send` to send one real email to `SEND_TO`.
+and tests input validation and the locked recipient. Add `--send` to send one real email to `SEND_TO`, and `--publish` to save the run to `public/test-run.json` (contact emails removed); commit and push it and the app's **Load latest test run** button shows it. A shareable link opens it directly: `/?test-run`.
 
 ```bash
-node scripts/e2e.mjs https://sprinto-outreach-bice-one.vercel.app
+node scripts/e2e.mjs https://sprinto-outreach-bice-one.vercel.app --publish
 ```
 
 Last run (19 Nov 2026): 358/358 checks passed, 42/42 quotes found on the live pages, avg 11 s per
