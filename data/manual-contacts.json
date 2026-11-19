@@ -1,0 +1,8 @@
+{
+  "example.com": {
+    "name": "Jane Doe",
+    "title": "CTO",
+    "email": "jane@example.com",
+    "note": "Looked up by hand on Apollo.io (Option B). Replace with real lookups, keyed by domain."
+  }
+}
