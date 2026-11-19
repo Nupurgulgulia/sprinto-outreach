@@ -85,3 +85,25 @@ Open http://localhost:3000, press **Try the demo list**, then **Run**.
 
 Each company runs in its own request (up to 60 s), so a long list never hits the serverless time
 limit. Results are kept in the browser (localStorage) and can be exported as JSON.
+
+## Testing
+
+**Offline rule checks** (no network, under a second): every branch of the Evidence Map verdict, the
+loop's page choice, the quote check, rule extraction and robots.txt.
+
+```bash
+npx tsx scripts/rules-check.ts
+```
+
+**Live end-to-end test** against the deployed app: 20 real companies with known answers where we
+have them, ~360 invariant checks (verdict matches the four answers, at most 4 extra fetches, every
+quote from the company's own site, contact and draft only for qualified companies, email greets by
+first name), then it re-fetches every quote's source page to confirm the quote is really there,
+and tests input validation and the locked recipient. Add `--send` to send one real email to `SEND_TO`.
+
+```bash
+node scripts/e2e.mjs https://sprinto-outreach-bice-one.vercel.app
+```
+
+Last run (19 Nov 2026): 358/358 checks passed, 42/42 quotes found on the live pages, avg 11 s per
+company (max 24 s, limit 60 s), 0.95 extra fetches per company on average.
