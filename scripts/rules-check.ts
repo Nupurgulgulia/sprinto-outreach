@@ -1,6 +1,7 @@
 // Offline checks of the Evidence Map rules: every branch of the verdict, the loop's page choice,
 // the evidence (quote) check and the robots.txt parser. No network. Run: npx tsx scripts/rules-check.ts
 
+import { parseHeadcount } from "../lib/contact";
 import { emptyFacts, extractRules, quoteOnPage } from "../lib/extract";
 import { cleanHtml, robotsAllows } from "../lib/fetch";
 import { decide, evaluate, nextPage } from "../lib/rules";
@@ -81,6 +82,10 @@ const page = cleanHtml(
 check("real quote passes", quoteOnPage("We are currently undergoing our SOC 2 Type II audit", page));
 check("invented quote is rejected", !quoteOnPage("Acme is ISO 27001 certified since 2021", page));
 check("nav text is stripped by cleaning", !page.text.includes("Home Pricing"));
+check(
+  "Documenso: a quote stitched across two lines is rejected",
+  !quoteOnPage("SOC 2 Type II audit with an independent firm. Acme helps finance teams", page),
+);
 
 // --- Rule extraction on realistic snippets ---
 {
@@ -124,6 +129,18 @@ check("nav text is stripped by cleaning", !page.text.includes("Home Pricing"));
   const p = cleanHtml("<p>Shop by category: skincare, makeup and fashion bestsellers with free delivery and cash on delivery.</p>", "https://nykaa.com/", 200);
   check("Nykaa-style beauty store -> not B2B SaaS", extractRules(p).facts.is_b2b_saas === false);
 }
+
+{
+  const p = cleanHtml("<p>Kaizen Gaming went from 9 team members to 3,000+ in 20 markets with Atlassian.</p>", "https://www.atlassian.com/", 200);
+  check("Atlassian: a customer's '9 team members' is not Atlassian's headcount", extractRules(p).facts.employee_count === undefined);
+}
+{
+  const p = cleanHtml("<p>We are a remote team of 45 people building payroll software for startups.</p>", "https://acme.io/about", 200);
+  check("'we are a team of 45 people' is the company's own headcount", extractRules(p).facts.employee_count === 45);
+}
+check("Hunter headcount '1001-5000' -> 1001", parseHeadcount("1001-5000")?.min === 1001);
+check("Hunter headcount '10K+' -> 10000", parseHeadcount("10K+")?.min === 10000);
+check("Hunter headcount missing -> null", parseHeadcount(undefined) === null);
 
 // --- robots.txt ---
 check("robots: Disallow /careers blocks /careers", !robotsAllows("User-agent: *\nDisallow: /careers", "/careers"));

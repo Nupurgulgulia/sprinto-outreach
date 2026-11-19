@@ -39,7 +39,19 @@ export function isSmall(employees: number | null): boolean {
   return employees === null || employees <= 50;
 }
 
-export async function findContact(domain: string, employees: number | null): Promise<{ contact: Contact | null; note: string }> {
+export type Headcount = { label: string; min: number };
+type ContactLookup = { contact: Contact | null; note: string; headcount?: Headcount | null };
+
+/** Hunter reports company size as a band ("1001-5000", "10K+"). The lower bound is what we can defend. */
+export function parseHeadcount(raw: unknown): Headcount | null {
+  if (typeof raw !== "string" || !raw.trim()) return null;
+  const m = raw.replace(/,/g, "").match(/(\d+(?:\.\d+)?)\s*(k)?/i);
+  if (!m) return null;
+  const min = Math.round(Number(m[1]) * (m[2] ? 1000 : 1));
+  return Number.isFinite(min) ? { label: raw.trim(), min } : null;
+}
+
+export async function findContact(domain: string, employees: number | null): Promise<ContactLookup> {
   const m = (manual as Record<string, { name: string; title: string; email: string; note?: string }>)[domain];
   if (m) {
     const s = score(m.title, isSmall(employees));
@@ -69,6 +81,7 @@ export async function findContact(domain: string, employees: number | null): Pro
     if (!res.ok) return { contact: null, note: `Hunter returned HTTP ${res.status}.` };
     const data = (await res.json())?.data;
     const emails: HunterEmail[] = data?.emails ?? [];
+    const headcount = parseHeadcount(data?.headcount);
     const small = isSmall(employees);
     const ranked = emails
       .filter((e) => e.first_name && e.position)
@@ -81,6 +94,7 @@ export async function findContact(domain: string, employees: number | null): Pro
         note: emails.length
           ? `Hunter found ${emails.length} people but none with a founder, CTO or security title.`
           : "Hunter found no named people at this domain.",
+        headcount,
       };
     }
     const top = ranked[0];
@@ -96,6 +110,7 @@ export async function findContact(domain: string, employees: number | null): Pro
         why: `${top.e.position}: ${top.why}. Picked from ${ranked.length} relevant of ${emails.length} people Hunter found.`,
       },
       note: "Hunter.io Domain Search (1 search used).",
+      headcount,
     };
   } catch (e) {
     return { contact: null, note: `Hunter call failed: ${e instanceof Error ? e.message : String(e)}` };

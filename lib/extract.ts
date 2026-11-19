@@ -54,10 +54,19 @@ function norm(s: string): string {
 export function quoteOnPage(quote: string | null | undefined, page: CleanPage): boolean {
   if (!quote || quote.trim().length < 4) return false;
   const q = norm(quote).replace(/^["']|["']$/g, "").replace(/\.{3}|…/g, " ");
-  const text = norm(page.text);
-  if (text.includes(q)) return true;
-  // Allow the model to have trimmed the ends of a long sentence.
-  return q.length > 50 && text.includes(q.slice(0, 50));
+  // Match inside ONE line of the cleaned page. Joining lines would let a quote stitch together
+  // text that is not contiguous on the real page (the cleaner removes short lines in between).
+  return page.text.split("\n").some((line) => {
+    const l = norm(line);
+    // Allow the model to have trimmed the ends of a long sentence.
+    return l.includes(q) || (q.length > 50 && l.includes(q.slice(0, 50)));
+  });
+}
+
+/** A model quote that spans several lines keeps only its longest line, which is then checked. */
+function oneLine(quote: string | null | undefined): string | null | undefined {
+  if (!quote || !/\n/.test(quote)) return quote;
+  return quote.split(/\n+/).map((s) => s.trim()).sort((a, b) => b.length - a.length)[0];
 }
 
 const ev = (quote: string, url: string): Evidence => ({ quote: quote.slice(0, 280), url });
@@ -92,6 +101,16 @@ function lines(page: CleanPage): string[] {
 
 function firstLine(page: CleanPage, re: RegExp, also?: RegExp): string | null {
   return lines(page).find((l) => re.test(l) && (!also || also.test(l))) ?? null;
+}
+
+/**
+ * A headcount line must be about this company ("we are 45 people", "Acme has 120 employees"),
+ * not a customer's story ("Kaizen went from 9 team members to 3,000").
+ */
+export function aboutThisCompany(line: string, url: string): boolean {
+  const name = new URL(url).hostname.replace(/^www\./, "").split(".")[0];
+  if (/\b(went from|grew from|helped|customer|client|case study)\b/i.test(line)) return false;
+  return /\b(we|we're|we are|our|us|team of)\b/i.test(line) || new RegExp(`\\b${name}\\b`, "i").test(line);
 }
 
 /** Security / IT compliance, not payroll, tax or financial-regulatory compliance. Applied to rules and AI alike. */
@@ -171,12 +190,12 @@ export function extractRules(page: CleanPage): PageUpdate {
     triggers.push(trigger("security_page_no_badge", securityLines[0], url));
   }
 
-  // Q3 stage and size
-  const emp = page.text.match(/(?:team of\s+)?(\d{1,3}(?:,\d{3})+|\d{1,5})\+?\s*(?:employees|people|team members|teammates|strong)\b/i);
+  // Q3 stage and size. Customer stories quote other companies' headcounts, so skip those pages.
+  const emp = kind === "customers" ? null : page.text.match(/(?:team of\s+)?(\d{1,3}(?:,\d{3})+|\d{1,5})\+?\s*(?:employees|people|team members|teammates|strong)\b/i);
   if (emp) {
     const n = Number(emp[1].replace(/,/g, ""));
     const l = firstLine(page, new RegExp(emp[0].replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
-    if (n > 0 && l) {
+    if (n > 0 && l && aboutThisCompany(l, url)) {
       f.employee_count = n;
       f.employee_evidence = ev(l, url);
     }
@@ -271,6 +290,12 @@ export async function extractAi(page: CleanPage, domain: string): Promise<{ upda
   );
   const update: PageUpdate = { facts: {}, triggers: [], rejected: 0 };
   if (!data) return { update, error };
+  for (const k of ["b2b_quote", "funding_quote", "employee_quote", "open_roles_quote", "enterprise_quote", "customers_quote"] as const) {
+    data[k] = oneLine(data[k]);
+  }
+  for (const c of data.certifications ?? []) c.quote = oneLine(c.quote) ?? c.quote;
+  if (data.certification_in_progress) data.certification_in_progress.quote = oneLine(data.certification_in_progress.quote) ?? "";
+  if (data.compliance_hire) data.compliance_hire.quote = oneLine(data.compliance_hire.quote) ?? "";
 
   const url = page.url;
   const f = update.facts;
@@ -298,7 +323,14 @@ export async function extractAi(page: CleanPage, domain: string): Promise<{ upda
     f.funding_stage = data.funding_stage;
     f.funding_evidence = ev(data.funding_quote!, url);
   }
-  if (typeof data.employee_count === "number" && data.employee_count > 0 && keep(data.employee_quote)) {
+  if (
+    typeof data.employee_count === "number" &&
+    data.employee_count > 0 &&
+    pageKind(url) !== "customers" &&
+    data.employee_quote &&
+    aboutThisCompany(data.employee_quote, url) &&
+    keep(data.employee_quote)
+  ) {
     f.employee_count = data.employee_count;
     f.employee_evidence = ev(data.employee_quote!, url);
   }

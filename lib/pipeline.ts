@@ -117,7 +117,25 @@ export async function runCompany(domain: string, opts: { ai: boolean }): Promise
 
   // 7. contact + draft, only for qualified companies (saves Hunter's 25 monthly searches)
   if (d.verdict === "SEND" || d.verdict === "SEND_FLAGGED") {
-    const { contact, note } = await findContact(domain, facts.employee_count);
+    const { contact, note, headcount } = await findContact(domain, facts.employee_count);
+    // The site never said how big they are, but Hunter's company data does. Over 500 is the
+    // Evidence Map's size short-circuit, so re-decide before writing anything.
+    if (facts.employee_count === null && headcount && headcount.min > 500) {
+      facts.employee_count = headcount.min;
+      facts.employee_evidence = { quote: `Hunter.io company data: headcount ${headcount.label}`, url: `https://hunter.io/search/${domain}` };
+      const qs2 = evaluate(facts, tries);
+      const d2 = decide(qs2, extra, facts);
+      return {
+        ...result,
+        questions: qs2,
+        verdict: d2.verdict,
+        reason: `${d2.reason} (size from Hunter.io; the site never stated it)`,
+        rank: d2.rank,
+        needs: d2.needs,
+        flags: d2.flags,
+        contact_note: `${note} No email drafted: company is too large.`,
+      };
+    }
     result.contact = contact;
     result.contact_note = note;
     if (contact) {

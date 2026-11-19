@@ -91,13 +91,15 @@ function checkResult(r, spec) {
     expectTrue(s, `"${q.question}" has evidence`, q.evidence.length > 0);
     for (const e of q.evidence) {
       const host = new URL(e.url).hostname;
-      expectTrue(s, "evidence URL is on their site (or their job board)", host.endsWith(s) || ATS.test(host), e.url);
+      expectTrue(s, "evidence URL is on their site (or their job board, or Hunter company data)", host.endsWith(s) || ATS.test(host) || host === "hunter.io", e.url);
       expectTrue(s, "evidence quote is non-trivial", e.quote.trim().length >= 8, e.quote);
     }
   }
   // Contact and draft only for qualified companies
   const qualified = r.verdict === "SEND" || r.verdict === "SEND_FLAGGED";
-  if (!qualified) expectTrue(s, "no Hunter search / draft for non-qualified", r.contact === null && r.draft === null);
+  const droppedByHunterSize = r.verdict === "DROP" && /Hunter/.test(r.reason);
+  if (!qualified) expectTrue(s, "no contact / draft for non-qualified", r.contact === null && r.draft === null);
+  if (!qualified && !droppedByHunterSize) expectTrue(s, "no Hunter search for non-qualified", r.contact_note === null);
   if (qualified) expectTrue(s, "qualified has a contact note", !!r.contact_note);
   if (r.contact) {
     expectTrue(s, "contact has name, title, email", !!(r.contact.name && r.contact.title && /@/.test(r.contact.email)));
@@ -162,6 +164,7 @@ async function verifyQuotes(results) {
   for (const r of results) {
     for (const q of r.questions ?? []) {
       for (const e of q.evidence) {
+        if (e.url.startsWith("https://hunter.io/")) continue; // company data from Hunter's API, not a web page
         const text = await pageText(e.url);
         if (text === null) { unreachable++; continue; }
         const quote = normText(e.quote).replace(/^\[image: |\]$/g, "");
