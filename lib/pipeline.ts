@@ -62,6 +62,11 @@ export async function runCompany(domain: string, opts: { ai: boolean }): Promise
     log.push({ step: 0, url: `${origin}/`, reason: "homepage", outcome: home.blocked ? "blocked" : "failed", detail: home.reason, words: 0 });
     return base("REVIEW", `Homepage could not be read: ${home.reason}. Queued for a human; the run moved on.`);
   }
+  // A homepage with almost no readable text (even after the rendering reader) can't be judged.
+  if (home.page.words < 40) {
+    log.push({ step: 0, url: home.page.url, reason: "homepage", outcome: "failed", detail: `only ${home.page.words} readable words, even after the rendering reader`, words: home.page.words });
+    return base("REVIEW", `Homepage has only ${home.page.words} readable words (a JavaScript app the reader could not render). Queued for a human; the run moved on.`);
+  }
   // Keep the origin the site actually redirected to (e.g. apex -> www).
   origin = new URL(home.page.url).origin;
   fetched.add(`${origin}/`);

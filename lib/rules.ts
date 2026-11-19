@@ -131,17 +131,20 @@ export function nextPage(
     // Pass 1: a page the homepage actually links to (e.g. /trust-center, jobs.lever.co/acme).
     for (const path of spec.pages) {
       const stem = path.slice(1);
-      const linked = homeLinks.find((l) => {
-        try {
-          const u = new URL(l);
-          if (fetched.has(l)) return false;
-          const ats = /lever\.co|greenhouse\.io|ashbyhq\.com|workable\.com/.test(u.hostname);
-          if (stem === "careers" && ats) return true;
-          return u.hostname.endsWith(site) && new RegExp(`^/${stem}`, "i").test(u.pathname);
-        } catch {
-          return false;
-        }
-      });
+      // The main page, not a sub-page: /trust beats /trust/ai, so the shortest path wins.
+      const linked = homeLinks
+        .filter((l) => {
+          try {
+            const u = new URL(l);
+            if (fetched.has(l)) return false;
+            const ats = /lever\.co|greenhouse\.io|ashbyhq\.com|workable\.com/.test(u.hostname);
+            if (stem === "careers" && ats) return true;
+            return u.hostname.endsWith(site) && new RegExp(`^/${stem}`, "i").test(u.pathname);
+          } catch {
+            return false;
+          }
+        })
+        .sort((a, b) => new URL(a).pathname.length - new URL(b).pathname.length)[0];
       if (linked) return { url: linked, question: q.id, reason: `"${q.question}" is still empty → linked from homepage` };
     }
     // Pass 2: the standard paths, in Evidence Map order.

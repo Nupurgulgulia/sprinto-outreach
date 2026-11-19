@@ -105,6 +105,26 @@ check("nav text is stripped by cleaning", !page.text.includes("Home Pricing"));
   check("cookie banner is dropped, not used as a security quote", extractRules(p).triggers.length === 0 && !p.text.includes("cookies"));
 }
 
+// --- Regressions found by the live E2E run ---
+{
+  const qs = evaluate(facts({ ...b2b }), tries0);
+  const n = nextPage(qs, new Set(), "https://www.atlassian.com", ["https://www.atlassian.com/trust/ai", "https://www.atlassian.com/trust"]);
+  check("Atlassian: main /trust is chosen over the /trust/ai sub-page", n?.url === "https://www.atlassian.com/trust", JSON.stringify(n));
+}
+{
+  const p = cleanHtml(
+    "<p>Protect the integrity of your data with comprehensive security practices and encryption at rest.</p><p>Access control and least privilege apply to every AI feature we ship.</p>",
+    "https://www.atlassian.com/trust/ai",
+    200,
+  );
+  const u = extractRules(p);
+  check("Atlassian: a /trust/ai sub-page does not prove 'not certified'", u.facts.certifications === undefined && u.triggers.length === 0, JSON.stringify(u));
+}
+{
+  const p = cleanHtml("<p>Shop by category: skincare, makeup and fashion bestsellers with free delivery and cash on delivery.</p>", "https://nykaa.com/", 200);
+  check("Nykaa-style beauty store -> not B2B SaaS", extractRules(p).facts.is_b2b_saas === false);
+}
+
 // --- robots.txt ---
 check("robots: Disallow /careers blocks /careers", !robotsAllows("User-agent: *\nDisallow: /careers", "/careers"));
 check("robots: longer Allow beats Disallow /", robotsAllows("User-agent: *\nDisallow: /\nAllow: /security", "/security"));

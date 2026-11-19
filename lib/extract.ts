@@ -73,7 +73,7 @@ const IN_PROGRESS = /\b(in progress|working towards?|pursuing|underway|under way
 const B2B_POSITIVE =
   /\b(b2b|saas|for (?:teams|businesses|companies|enterprises|startups)|(?:sales|engineering|hr|finance|marketing|support|product|ops|it|security|legal) teams|your (?:team|business|customers|workflows?)|platform (?:for|that)|api(?:s)?\b|integrat(?:es|ions) with|book a demo|request a demo|free trial)\b/i;
 const B2C_NEGATIVE =
-  /\b(add to cart|shop now|free shipping|order online|order now|book a table|our menu|demat|trading account|mutual funds|stock ?brok(?:ing|er|erage)|brokerage|invest(?:ing)? in (?:stocks|mutual funds|ipos?)|open (?:a |an |your )?(?:free )?(?:\w+ )?account|download the app|for your family|for individuals|personal finance|recipes)\b/i;
+  /\b(add to cart|shop now|free shipping|order online|order now|book a table|our menu|demat|trading account|mutual funds|stock ?brok(?:ing|er|erage)|brokerage|invest(?:ing)? in (?:stocks|mutual funds|ipos?)|open (?:a |an |your )?(?:free )?(?:\w+ )?account|download the app|for your family|for individuals|personal finance|recipes|cash on delivery|free delivery|order food|food delivery|groceries|beauty products|skincare|makeup|lipstick|fashion|apparel|shop by category|bestsellers)\b/i;
 
 const ENTERPRISE_NAMES = [
   "Google", "Microsoft", "Amazon", "AWS", "Salesforce", "Oracle", "Adobe", "Deloitte", "Accenture", "Walmart",
@@ -156,8 +156,12 @@ export function extractRules(page: CleanPage): PageUpdate {
   // A real security page talks about security in several places. A thin or off-topic page proves nothing.
   const SECURITY_TALK = /\b(encrypt\w*|access control|penetration|pen ?test|vulnerab\w*|data protection|infosec|security (?:practices|program|controls|team)|least privilege|sso|mfa|two-factor|aes-?256|tls)\b/i;
   const securityLines = lines(page).filter((l) => SECURITY_TALK.test(l));
+  // Only the main security/trust page can prove a certification is absent. A sub-page like
+  // /trust/ai talks about one topic and says nothing about the company's certifications.
+  const topLevel = new URL(url).pathname.replace(/\/$/, "").split("/").filter(Boolean).length <= 1;
   if (
     kind === "security" &&
+    topLevel &&
     securityLines.length >= 2 &&
     !f.certifications?.length &&
     !triggers.some((t) => t.type === "audit_in_progress")
@@ -250,7 +254,7 @@ const EXTRACT_SYSTEM = `You read one web page of a company and pull out facts fo
 Rules:
 - Only report what the page itself states. If the page does not say it, return null. Never guess.
 - Every fact needs a quote copied EXACTLY, character for character, from the page text (one sentence or line, under 200 characters). A fact without an exact quote will be thrown away.
-- "is_b2b_saas" is true only if the page describes software sold to businesses or teams; false if it sells to consumers or is not software.
+- "is_b2b_saas" is true only if the page describes software sold to businesses or teams; false if it sells to consumers or is not software (a shop, a marketplace, a broker, a delivery app). Whenever you set it to true OR false, "b2b_quote" must be the exact line that shows it (e.g. a product, pricing or "for teams" line), and "buyer_description" names who buys.
 - "certifications" lists only certifications the company says it HOLDS (e.g. SOC 2 Type II, ISO 27001). Certifications that are planned or in progress go in "certification_in_progress".
 - "enterprise_customers" lists well-known large companies named as customers or shown as logos.
 Return JSON only, with exactly these keys:
