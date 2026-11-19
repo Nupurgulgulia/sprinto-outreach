@@ -127,26 +127,28 @@ export function nextPage(
   for (const q of qs) {
     if (q.status !== "unknown" || q.tries >= q.limit) continue;
     const spec = QUESTIONS.find((x) => x.id === q.id)!;
+    const site = new URL(origin).hostname.replace(/^www\./, "");
+    // Pass 1: a page the homepage actually links to (e.g. /trust-center, jobs.lever.co/acme).
     for (const path of spec.pages) {
       const stem = path.slice(1);
       const linked = homeLinks.find((l) => {
         try {
           const u = new URL(l);
-          const sameSite = u.hostname.endsWith(new URL(origin).hostname.replace(/^www\./, ""));
+          if (fetched.has(l)) return false;
           const ats = /lever\.co|greenhouse\.io|ashbyhq\.com|workable\.com/.test(u.hostname);
           if (stem === "careers" && ats) return true;
-          return sameSite && new RegExp(`^/${stem}`, "i").test(u.pathname);
+          return u.hostname.endsWith(site) && new RegExp(`^/${stem}`, "i").test(u.pathname);
         } catch {
           return false;
         }
       });
-      const url = linked ?? `${origin}${path}`;
-      if (fetched.has(url) || fetched.has(`${origin}${path}`)) continue;
-      return {
-        url,
-        question: q.id,
-        reason: `"${q.question}" is still empty → ${linked ? "linked from homepage" : "standard path"}`,
-      };
+      if (linked) return { url: linked, question: q.id, reason: `"${q.question}" is still empty → linked from homepage` };
+    }
+    // Pass 2: the standard paths, in Evidence Map order.
+    for (const path of spec.pages) {
+      const url = `${origin}${path}`;
+      if (fetched.has(url)) continue;
+      return { url, question: q.id, reason: `"${q.question}" is still empty → standard path` };
     }
   }
   return null;
