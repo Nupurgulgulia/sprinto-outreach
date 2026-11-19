@@ -1,5 +1,7 @@
 # Sprinto Outreach (Build 2)
 
+**Live demo:** https://sprinto-outreach-bice-one.vercel.app
+
 Paste a list of company websites. For each one the app reads the site, decides whether it fits
 Sprinto's ICP, finds the right person, works out their two most likely pain points, drafts a cold
 email addressed to them by name, and sends it through Resend to **your own inbox** (the recipient is
