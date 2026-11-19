@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components Map · Sprinto Outreach</title>
+<style>
+  :root {
+    --ink: #14161b; --muted: #4b5260; --line: #c9ced8; --head: #1f2a44;
+    --user: #ece9ff; --user-b: #6c5ce7;
+    --ui: #e4efff; --ui-b: #2f6fd6;
+    --server: #fff4d6; --server-b: #c99a00;
+    --data: #e3f6ea; --data-b: #2e9b57;
+    --ai: #ffe6ef; --ai-b: #d23f73;
+    --ext: #fff0e0; --ext-b: #d9822b;
+    --fail: #fdeaea; --fail-b: #c43c3c;
+    --gray: #f1f2f5; --gray-b: #8a92a3;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--ink); font: 21px/1.38 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+  #canvas { position: relative; width: 2600px; padding: 34px 40px 30px; }
+  h1 { margin: 0 0 6px; font-size: 44px; text-align: center; letter-spacing: -.01em; }
+  .sub { text-align: center; color: var(--muted); font-size: 22px; margin-bottom: 26px; }
+  .grid {
+    position: relative; display: grid;
+    grid-template-columns: 250px 300px 330px 380px 470px 420px 370px;
+    column-gap: 0; row-gap: 0;
+  }
+  .colhead { background: var(--head); color: #fff; font-weight: 700; font-size: 24px; text-align: center; padding: 14px 8px; border-right: 2px solid #fff; }
+  .colhead:first-child { border-radius: 10px 0 0 0; }
+  .colhead:last-child { border-radius: 0 10px 0 0; border-right: 0; }
+  .lane { grid-column: 1 / -1; border-bottom: 2px dashed #d8dce4; }
+  .actor { background: var(--head); color: #fff; padding: 18px 14px; display: flex; flex-direction: column; justify-content: center; text-align: center; border-bottom: 2px solid #fff; z-index: 1; }
+  .actor b { font-size: 25px; line-height: 1.2; }
+  .actor span { font-size: 18px; opacity: .85; margin-top: 4px; }
+  .cell { padding: 22px 14px; display: flex; flex-direction: column; gap: 18px; justify-content: center; z-index: 1; }
+  .box { border: 3px solid; border-radius: 14px; padding: 12px 14px; background: #fff; box-shadow: 0 2px 0 rgba(0,0,0,.05); }
+  .box h3 { margin: 0 0 6px; font-size: 22px; line-height: 1.25; }
+  .box p { margin: 0; font-size: 19.5px; color: #262a33; }
+  .box ul { margin: 4px 0 0; padding-left: 22px; font-size: 19px; }
+  .box li { margin: 1px 0; }
+  .step { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: #fff; font-weight: 800; font-size: 19px; margin-right: 8px; vertical-align: 2px; }
+  .user { background: var(--user); border-color: var(--user-b); } .user .step { background: var(--user-b); }
+  .ui { background: var(--ui); border-color: var(--ui-b); } .ui .step { background: var(--ui-b); }
+  .server { background: var(--server); border-color: var(--server-b); } .server .step { background: var(--server-b); }
+  .data { background: var(--data); border-color: var(--data-b); } .data .step { background: var(--data-b); }
+  .ai { background: var(--ai); border-color: var(--ai-b); } .ai .step { background: var(--ai-b); }
+  .ext { background: var(--ext); border-color: var(--ext-b); } .ext .step { background: var(--ext-b); }
+  .fail { background: var(--fail); border-color: var(--fail-b); border-style: dashed; }
+  .gray { background: var(--gray); border-color: var(--gray-b); }
+  .verdicts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .verdicts span { font-size: 16.5px; font-weight: 700; padding: 2px 9px; border-radius: 99px; color: #fff; }
+  .tag { display: inline-block; font-size: 16px; font-weight: 700; padding: 1px 8px; border-radius: 6px; background: rgba(0,0,0,.08); margin-top: 6px; }
+  svg#wires { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 3; overflow: visible; }
+  .lbl { font: 700 17px "Segoe UI", system-ui, sans-serif; }
+  .legend { display: flex; gap: 44px; align-items: center; margin-top: 22px; padding: 14px 22px; background: #f5f6f8; border-radius: 10px; font-size: 20px; flex-wrap: wrap; }
+  .legend b { margin-right: 6px; }
+  .legend svg { vertical-align: middle; margin-right: 8px; }
+  .chip { display: inline-block; width: 22px; height: 22px; border-radius: 5px; border: 3px solid; vertical-align: -4px; margin-right: 6px; }
+  .foot { display: flex; justify-content: space-between; color: var(--muted); font-size: 18px; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <h1>Build 2 · Sprinto Cold Outreach Agent: Components Map</h1>
+  <div class="sub">How a list of company websites becomes a qualified, evidence-backed, personalised cold email in the Growth Lead's inbox</div>
+
+  <div class="grid" id="grid">
+    <!-- header -->
+    <div class="colhead">Actor / layer</div>
+    <div class="colhead">Trigger</div>
+    <div class="colhead">Input</div>
+    <div class="colhead">Context (scrape)</div>
+    <div class="colhead">Processing (rules + loop)</div>
+    <div class="colhead">AI</div>
+    <div class="colhead">Output</div>
+
+    <!-- lane backgrounds -->
+    <div class="lane" style="grid-row:2; background:#f7f5ff"></div>
+    <div class="lane" style="grid-row:3; background:#f3f8ff"></div>
+    <div class="lane" style="grid-row:4; background:#fffbef"></div>
+    <div class="lane" style="grid-row:5; background:#f2fbf5"></div>
+    <div class="lane" style="grid-row:6; background:#fff5f8"></div>
+    <div class="lane" style="grid-row:7; background:#fff8f0"></div>
+    <div class="lane" style="grid-row:8; background:#f6f7f9"></div>
+
+    <!-- ROW 2: Growth Lead -->
+    <div class="actor" style="grid-row:2;grid-column:1"><b>Growth Lead</b><span>(user)</span></div>
+    <div class="cell" style="grid-row:2;grid-column:2">
+      <div class="box user" id="trigger"><h3>Pastes company websites</h3><p>Up to 15 domains, one per line, then presses <b>Run</b></p></div>
+    </div>
+    <div class="cell" style="grid-row:2;grid-column:7">
+      <div class="box user" id="approve"><h3>Reviews &amp; approves</h3><p>Reads the evidence, edits the email if needed, clicks <b>Approve &amp; send</b> (auto-send only for fully qualified)</p></div>
+    </div>
+
+    <!-- ROW 3: Web app -->
+    <div class="actor" style="grid-row:3;grid-column:1"><b>Web app</b><span>Next.js UI in the browser<br>(Vercel)</span></div>
+    <div class="cell" style="grid-row:3;grid-column:3">
+      <div class="box ui" id="runscreen"><h3>Run screen</h3><p>Cleans &amp; de-dupes domains; calls the server once per company and shows progress</p></div>
+    </div>
+    <div class="cell" style="grid-row:3;grid-column:4">
+      <div class="box ui" id="setup"><h3>Setup check</h3><p>Live status of AI, Hunter, Resend and the page reader (<code>/api/health</code>)</p></div>
+    </div>
+    <div class="cell" style="grid-row:3;grid-column:7">
+      <div class="box ui" id="board"><h3>Results board</h3>
+        <ul><li>Verdict + written reason, ranked</li><li>4 questions with quotes &amp; source links</li><li>Agent-loop fetch log</li><li>Contact &amp; why · 2 pain points</li><li>Editable email</li></ul>
+        <span class="tag">Saved in browser · Export JSON · Load test run</span></div>
+    </div>
+
+    <!-- ROW 4: Server pipeline -->
+    <div class="actor" style="grid-row:4;grid-column:1"><b>Server pipeline</b><span>Vercel functions<br>/api/run · /api/send</span></div>
+    <div class="cell" style="grid-row:4;grid-column:3">
+      <div class="box server" id="api"><h3>/api/run</h3><p>One company per request (60 s limit, 30 s fetch budget)</p></div>
+    </div>
+    <div class="cell" style="grid-row:4;grid-column:4">
+      <div class="box server" id="scrape"><h3><span class="step">1</span>Scrape</h3><p>robots.txt check → fetch page → clean: drop nav, cookie banners, blocks &lt; 8 words, duplicates; cap ~2,000 tokens. JS shell → retry once via reader</p></div>
+    </div>
+    <div class="cell" style="grid-row:4;grid-column:5">
+      <div class="box server" id="qualify"><h3><span class="step">3</span>Qualify: Evidence Map in code</h3>
+        <ul><li><b>B2B SaaS?</b> no → DROP</li><li><b>Already certified?</b> SOC 2 / ISO 27001 → DROP</li><li><b>Right stage &amp; size?</b> &gt;500 people → DROP</li><li><b>Compliance pressure?</b> none → HOLD</li></ul>
+        <p style="margin-top:6px"><b>Agent loop:</b> next page for the first empty field · ≤ 4 fetches beyond homepage</p>
+        <div class="verdicts"><span style="background:#11795a">SEND</span><span style="background:#b07a00">SEND · flagged</span><span style="background:#2d5fb8">HOLD</span><span style="background:#a8323a">DROP</span><span style="background:#5d6573">REVIEW</span></div>
+      </div>
+    </div>
+
+    <!-- ROW 5: Data sources -->
+    <div class="actor" style="grid-row:5;grid-column:1"><b>Data sources</b><span>public web</span></div>
+    <div class="cell" style="grid-row:5;grid-column:4">
+      <div class="box data" id="site"><h3>Company website</h3><p>/ · /security · /trust · /careers · /pricing · /customers · job boards (Lever, Greenhouse)</p><span class="tag">r.jina.ai renders JS-heavy pages</span></div>
+    </div>
+    <div class="cell" style="grid-row:5;grid-column:5;padding-left:190px">
+      <div class="box fail" id="review"><h3>Failed fetch → REVIEW</h3><p>Cloudflare, robots.txt, 404, empty page: logged with reason, run moves on</p></div>
+    </div>
+
+    <!-- ROW 6: AI model -->
+    <div class="actor" style="grid-row:6;grid-column:1"><b>AI model</b><span>Google Gemini Flash<br>(gemini-flash-latest)</span></div>
+    <div class="cell" style="grid-row:6;grid-column:6">
+      <div class="box ai" id="extract"><h3><span class="step">2</span>Extract facts</h3><p>Named fields per page, each with an <b>exact quote</b>. Code rejects any quote not on the page</p></div>
+      <div class="box ai" id="draft"><h3><span class="step">5</span><span class="step">6</span>Pain points + draft</h3><p>2 pain points for this person; email from verified facts only. Checked: first name, &lt; 120 words, no filler · template fallback</p></div>
+    </div>
+
+    <!-- ROW 7: Contact data -->
+    <div class="actor" style="grid-row:7;grid-column:1"><b>Contact data</b><span>Hunter.io API<br>/ Apollo (manual)</span></div>
+    <div class="cell" style="grid-row:7;grid-column:4">
+      <div class="box gray" id="apollo"><h3>Apollo lookups (Option B)</h3><p><code>data/manual-contacts.json</code>, used first when present</p></div>
+    </div>
+    <div class="cell" style="grid-row:7;grid-column:5">
+      <div class="box ext" id="hunter"><h3><span class="step">4</span>Find the PoC</h3><p><b>Company Enrichment:</b> size if the site never says (&gt;500 → DROP)<br><b>Domain Search:</b> rank by title: founder / CTO (small) or security lead (larger)</p></div>
+    </div>
+
+    <!-- ROW 8: Email -->
+    <div class="actor" style="grid-row:8;grid-column:1"><b>Email</b><span>Resend API</span></div>
+    <div class="cell" style="grid-row:8;grid-column:6">
+      <div class="box ext" id="send"><h3><span class="step">7</span>Send via /api/send</h3><p>Resend API · <b>To: locked to SEND_TO</b> on the server; no field can change it</p></div>
+    </div>
+    <div class="cell" style="grid-row:8;grid-column:7">
+      <div class="box user" id="inbox"><h3>Email in your inbox</h3><p>Addressed to the contact by first name, with a hook from a quoted fact</p></div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><b>Flow:</b></span>
+    <span><svg width="64" height="16"><line x1="2" y1="8" x2="52" y2="8" stroke="#1f2a44" stroke-width="3.5"/><path d="M50 2 L62 8 L50 14 Z" fill="#1f2a44"/></svg>Main flow</span>
+    <span><svg width="64" height="16"><line x1="2" y1="8" x2="52" y2="8" stroke="#d23f73" stroke-width="3.5" stroke-dasharray="9 6"/><path d="M50 2 L62 8 L50 14 Z" fill="#d23f73"/></svg>Agent loop / conditional</span>
+    <span><svg width="64" height="16"><line x1="2" y1="8" x2="52" y2="8" stroke="#7a8294" stroke-width="3.5" stroke-dasharray="4 5"/><path d="M50 2 L62 8 L50 14 Z" fill="#7a8294"/></svg>Data fetch / handoff</span>
+    <span><b>Layers:</b></span>
+    <span><i class="chip" style="background:var(--user);border-color:var(--user-b)"></i>User</span>
+    <span><i class="chip" style="background:var(--ui);border-color:var(--ui-b)"></i>UI</span>
+    <span><i class="chip" style="background:var(--server);border-color:var(--server-b)"></i>Server (rules)</span>
+    <span><i class="chip" style="background:var(--ai);border-color:var(--ai-b)"></i>AI</span>
+    <span><i class="chip" style="background:var(--ext);border-color:var(--ext-b)"></i>External APIs</span>
+    <span><i class="chip" style="background:var(--data);border-color:var(--data-b)"></i>Data</span>
+  </div>
+  <div class="foot"><span>The verdict is always decided by code (the Evidence Map), never by the AI. The AI only reads pages and writes.</span><span>Live: sprinto-outreach-bice-one.vercel.app · Code: github.com/Nupurgulgulia/sprinto-outreach</span></div>
+
+  <svg id="wires"></svg>
+</div>
+
+<script>
+// Draws the arrows from the boxes' real positions, so the wiring stays right whatever the text length.
+const C = { main: "#1f2a44", loop: "#d23f73", data: "#7a8294" };
+const canvas = document.getElementById("canvas");
+const svg = document.getElementById("wires");
+function R(id) {
+  const r = document.getElementById(id).getBoundingClientRect();
+  const c = canvas.getBoundingClientRect();
+  return { l: r.left - c.left, t: r.top - c.top, r: r.right - c.left, b: r.bottom - c.top, w: r.width, h: r.height };
+}
+// anchor: side + fraction along that side
+function A(id, side, f = 0.5) {
+  const b = R(id);
+  if (side === "top") return [b.l + b.w * f, b.t];
+  if (side === "bottom") return [b.l + b.w * f, b.b];
+  if (side === "left") return [b.l, b.t + b.h * f];
+  return [b.r, b.t + b.h * f];
+}
+function wire(points, kind = "main", label, labelAt = 0.5, labelDx = 0, labelDy = -12) {
+  const color = C[kind];
+  const dash = kind === "loop" ? "12 8" : kind === "data" ? "5 7" : "";
+  const d = points.map((p, i) => (i ? "L" : "M") + p[0] + " " + p[1]).join(" ");
+  const ns = "http://www.w3.org/2000/svg";
+  const path = document.createElementNS(ns, "path");
+  path.setAttribute("d", d); path.setAttribute("fill", "none"); path.setAttribute("stroke", color);
+  path.setAttribute("stroke-width", "4"); path.setAttribute("stroke-linejoin", "round");
+  if (dash) path.setAttribute("stroke-dasharray", dash);
+  svg.appendChild(path);
+  // arrow head on the last segment
+  const [x1, y1] = points[points.length - 2], [x2, y2] = points[points.length - 1];
+  const ang = Math.atan2(y2 - y1, x2 - x1), s = 16;
+  const head = document.createElementNS(ns, "path");
+  head.setAttribute("d", `M${x2} ${y2} L${x2 - s * Math.cos(ang - 0.45)} ${y2 - s * Math.sin(ang - 0.45)} L${x2 - s * Math.cos(ang + 0.45)} ${y2 - s * Math.sin(ang + 0.45)} Z`);
+  head.setAttribute("fill", color);
+  svg.appendChild(head);
+  if (label) {
+    // label on the longest segment
+    let best = 0, bi = 0;
+    for (let i = 1; i < points.length; i++) {
+      const L = Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
+      if (L > best) { best = L; bi = i; }
+    }
+    const [ax, ay] = points[bi - 1], [bx, by] = points[bi];
+    const x = ax + (bx - ax) * labelAt + labelDx, y = ay + (by - ay) * labelAt + labelDy;
+    const t = document.createElementNS(ns, "text");
+    t.setAttribute("x", x); t.setAttribute("y", y); t.setAttribute("class", "lbl"); t.setAttribute("fill", color);
+    t.setAttribute("text-anchor", "middle"); t.textContent = label;
+    svg.appendChild(t);
+    const bb = t.getBBox();
+    const bg = document.createElementNS(ns, "rect");
+    bg.setAttribute("x", bb.x - 6); bg.setAttribute("y", bb.y - 2); bg.setAttribute("width", bb.width + 12); bg.setAttribute("height", bb.height + 4);
+    bg.setAttribute("rx", 5); bg.setAttribute("fill", "#fff"); bg.setAttribute("stroke", color); bg.setAttribute("stroke-width", "1.5");
+    svg.insertBefore(bg, t);
+  }
+}
+function draw() {
+  svg.setAttribute("width", canvas.scrollWidth); svg.setAttribute("height", canvas.scrollHeight);
+  const g = (id) => R(id);
+
+  // 1 user -> run screen
+  { const a = A("trigger", "right"), b = A("runscreen", "top"); wire([a, [b[0], a[1]], b], "main", "domains", 0.5); }
+  // 2 run screen -> /api/run
+  { const a = A("runscreen", "bottom"), b = A("api", "top"); wire([a, b], "main", "POST /api/run", 0.5, 92, 6); }
+  // 3 /api/run -> scrape
+  { const a = A("api", "right"), b = A("scrape", "left", g("api").t + g("api").h / 2 - g("scrape").t > 0 ? (g("api").t + g("api").h / 2 - g("scrape").t) / g("scrape").h : 0.5); wire([a, [b[0], a[1]]], "main"); }
+  // 4 scrape <-> website (fetch)
+  { const a = A("scrape", "bottom", 0.35), b = A("site", "top", 0.35); wire([a, b], "data", "fetch", 0.5, 34, 6); }
+  { const a = A("site", "top", 0.65), b = A("scrape", "bottom", 0.65); wire([a, b], "data", "HTML / text", 0.5, 62, 6); }
+  // 5 website/page text -> extract (AI)
+  { const a = A("site", "bottom", 0.5), b = A("extract", "left"); wire([a, [a[0], b[1]], b], "main", "clean page text", 0.78); }
+  // 6 extract -> qualify (facts + quotes)
+  { const a = A("extract", "top", 0.5), b = A("qualify", "right", 0.62); wire([a, [a[0], b[1]], b], "main", "facts + verified quotes", 0.5, 0, -12); }
+  // 7 loop: qualify -> scrape (next page)
+  { const q = g("qualify"), s = g("scrape"); const y = Math.min(q.t, s.t) - 16;
+    wire([A("qualify", "top", 0.18), [q.l + q.w * 0.18, y], [s.l + s.w * 0.7, y], A("scrape", "top", 0.7)], "loop", "loop: fetch next page for the first empty field (≤ 4)", 0.5); }
+  // 8 failed fetch -> review
+  { const a = A("site", "right", 0.5), b = A("review", "left", 0.5); wire([a, [b[0], a[1]]], "loop", "fails", 0.82); }
+  // 9 qualify -> hunter (qualified only)
+  { const q = g("qualify"), h = g("hunter"); const x = q.l + 70; wire([[x, q.b], [x, h.t]], "main", "qualified only", 0.66, 0, 0); }
+  // 10 apollo -> hunter
+  { const a = A("apollo", "right"), b = A("hunter", "left", 0.5); wire([a, [b[0], a[1]]], "data"); }
+  // 11 hunter -> draft (contact)
+  { const a = A("hunter", "right", 0.5), d = g("draft"); const x = d.l + d.w * 0.5; wire([a, [x, a[1]], [x, d.b]], "main", "contact + why", 0.45); }
+  // 12 qualify -> board (verdict + evidence)
+  { const a = A("qualify", "right", 0.16), b = A("board", "left", 0.5); const ex = g("extract"); const mx = ex.l + ex.w * 0.78; wire([a, [mx, a[1]], [mx, b[1]], b], "main", "verdict + evidence", 0.5, 0, -12); }
+  // 13 draft -> board
+  { const a = A("draft", "right", 0.5), bd = g("board"); const x = bd.l + bd.w * 0.5; wire([a, [x, a[1]], [x, bd.b]], "main", "email draft", 0.62, -60, -12); }
+  // 14 board -> approve
+  { const a = A("board", "top"), b = A("approve", "bottom"); wire([a, b], "main"); }
+  // 15 approve -> send
+  { const ap = g("approve"), sd = g("send"), cv = canvas.scrollWidth - 22;
+    const yy = sd.t - 18;
+    wire([A("approve", "right", 0.5), [cv, ap.t + ap.h / 2], [cv, yy], [sd.l + sd.w * 0.5, yy], [sd.l + sd.w * 0.5, sd.t]], "main", "Approve & send", 0.5, -96, 6); }
+  // 16 send -> inbox
+  { const a = A("send", "right", 0.5), b = A("inbox", "left", 0.5); wire([a, [b[0], a[1]]], "data"); }
+}
+document.fonts.ready.then(draw);
+</script>
+</body>
+</html>
